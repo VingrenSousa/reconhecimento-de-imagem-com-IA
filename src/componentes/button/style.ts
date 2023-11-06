@@ -6,12 +6,24 @@ const stylesButton=StyleSheet.create({
         backgroundColor:Theme.CORES.button,
         borderRadius:10,
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        flexDirection:"row", 
+        gap:RFValue(10),
+        overflow:"hidden",
+        zIndex:11,
+        elevation: 11,
+  
+
+       
+
+
 
     },
     Title:{
-        fontSize:RFValue(20),
+        fontSize:RFValue(15),
         fontFamily:Theme.FONTES.fontePrincipal,
+        color:Theme.CORES.TextColor,
+        fontVariant:["small-caps"]
     }
 
 })

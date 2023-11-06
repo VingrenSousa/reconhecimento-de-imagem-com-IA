@@ -13,6 +13,7 @@ const Button = ({size,title,icone='camera',...rest}:props)=>{
         <TouchableOpacity 
         style={[style.containe,{width:size[0],height:size[1]}]}
         {...rest}>
+            {icone?<AntDesign name={icone} size={24} color={Theme.CORES.TextColor} />:[]}
             {title
             ?<Text
             style={style.Title}
@@ -20,7 +21,7 @@ const Button = ({size,title,icone='camera',...rest}:props)=>{
                 {title}
             </Text>
             :[]}
-           {icone?<AntDesign name={icone} size={24} color={Theme.CORES.TextColor} />:[]}
+          
         </TouchableOpacity>
     )
 }

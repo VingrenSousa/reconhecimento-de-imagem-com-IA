@@ -16,7 +16,7 @@ export default function Apps() {
   return (
     <SafeAreaView>
       <StatusBar
-        style="dark"
+        style="light"
         backgroundColor="transparent"
         translucent />
         <Home/>
