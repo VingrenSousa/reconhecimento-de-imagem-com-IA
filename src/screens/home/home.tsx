@@ -1,5 +1,6 @@
  import { View } from 'react-native'
 import styla from './style'
+import Button from '../../componentes/button'
  
  
  
@@ -7,8 +8,16 @@ import styla from './style'
  
  const Home=()=>{
     return(
-        <View>
-
+        <View style={styla.containe}>
+            <View>
+                <Button 
+                size={[50,50]}
+                onPress={()=>{console.log('ola')}}
+               
+                />
+                    
+              
+            </View>
         </View>
     )
 }
