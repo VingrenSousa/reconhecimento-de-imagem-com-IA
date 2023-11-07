@@ -42,7 +42,9 @@ const stylesHome=StyleSheet.create({
         borderTopLeftRadius:RFValue(25),
         position:"absolute",
         top:RFValue(310),
-        zIndex:11
+        zIndex:11,
+        
+
       
         
     },
@@ -69,6 +71,35 @@ const stylesHome=StyleSheet.create({
         width:250,
         marginTop:10
        
+    },
+    containeResCont:{
+        width:"100%",
+        height:RFValue(320),
+        position:"absolute",
+        marginTop:RFValue(80),
+        padding:RFValue(16),
+        
+       
+    },
+    ResCont:{
+        shadowColor: "#000",
+        shadowOffset: {
+	        width: 0,
+	        height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+
+        elevation:7,
+        width:'100%',
+        height:RFValue(80),
+        backgroundColor:Theme.CORES.background,
+        marginVertical:10,
+        borderRadius:RFValue(10),
+        borderLeftWidth:10,
+        borderLeftColor:Theme.CORES.button,
+        padding:RFValue(10)
+        
     }
 })
 export default stylesHome
