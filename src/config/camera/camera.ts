@@ -1,0 +1,27 @@
+import React, { useState, useEffect } from 'react';
+import { Button, Image, View, Platform } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+
+
+  
+
+const  pickImage = async ()=> {
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      return result.assets[0].uri;
+    }else{
+      return null
+    }
+  };
+
+
+export default pickImage

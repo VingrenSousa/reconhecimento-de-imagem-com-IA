@@ -1,8 +1,9 @@
-import { View, Text, Image, ScrollView } from 'react-native'
+import { View, Text, Image, ScrollView,ImageProps } from 'react-native'
 import styla from './style'
 import Button from '../../componentes/button'
 import { useState } from 'react'
 import { testResCost } from '../test/test'
+import Camera from '../../config/camera/camera'
 
 
 
@@ -10,14 +11,24 @@ import { testResCost } from '../test/test'
 
 const Home = () => {
     const [aFoto, setaFoto] = useState(true)
-    const [Foto, setFoto] = useState(require('./../../assets/test2.jpg'))
+    const [Screm, setScrem] = useState('')
+    const [Foto, setFoto] = useState('')
+    const pickImage =async()=>{
+        const screm= await Camera()
+        setScrem(Screm)
+       
+           
+      
+        console.log(Screm)
+
+    }
     return (
         <View style={styla.containe}>
 
             <View style={styla.conaineImage}>
                 {
                     aFoto
-                        ? <Image source={Foto} style={{ flex: 1, zIndex: 1 }} />
+                        ? <Image source={Foto?{uri:Foto}:require('./../../assets/test2.jpg')} style={{ flex: 1, zIndex: 1 }} />
                         : <Text style={styla.Text}>
                             Selecione uma foto do seu prato para analisar
                         </Text>
@@ -27,7 +38,7 @@ const Home = () => {
                 <Button
                     size={[60, 60]}
                     activeOpacity={0.7}
-                    onPress={() => { console.log('ola') }}
+                    onPress={() => { pickImage() }}
 
                 />
             </View>
