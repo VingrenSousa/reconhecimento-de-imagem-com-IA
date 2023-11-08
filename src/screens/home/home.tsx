@@ -65,6 +65,9 @@ const Home = () => {
     }
     async function foodDetect(base64:string|undefined){
         //fazendo referencias do arquivos de variavel de ambiente
+        try {
+            
+      
         const response = await api.post(`/v2/models/${process.env.EXPO_PUBLIC_API_MODEL_ID}/versions/${process.env.EXPO_PUBLIC_API_MODEL_VERSION_ID}/outputs`,{
             "user_app_id":{
                 "user_id":process.env.EXPO_PUBLIC_API_USER_ID,
@@ -82,6 +85,11 @@ const Home = () => {
         }
         );
         console.log(response.data)
+        setLoading(false)
+        } catch (error) {
+            console.log('erro na api/axion:' +error)
+            setLoading(false)
+        }
 
     
     }
