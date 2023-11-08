@@ -1,34 +1,97 @@
-import { View, Text, Image, ScrollView,ImageProps } from 'react-native'
+import { View, Text, Image, ScrollView, ImageProps, Alert } from 'react-native'
 import styla from './style'
 import Button from '../../componentes/button'
 import { useState } from 'react'
 import { testResCost } from '../test/test'
-import Camera from '../../config/camera/camera'
+import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
+import { api } from '../../services/api' // serviços de api, ussando biblioteca axion
 
 
 
 
 
 const Home = () => {
-    const [aFoto, setaFoto] = useState(true)
-    const [Screm, setScrem] = useState('')
-    const [Foto, setFoto] = useState('')
-    const pickImage =async()=>{
-        const screm= await Camera()
-        setScrem(Screm)
-       
-           
-      
-        console.log(Screm)
 
+    const [Foto, setFoto] = useState('')
+    const [isLoading, setLoading] = useState(false)
+
+    const pickImage = async () => {
+        try {
+            const{status}= await ImagePicker.requestMediaLibraryPermissionsAsync()
+            if(status !== ImagePicker.PermissionStatus.GRANTED){
+                 Alert.alert('Sem permisão para acessar galeria')
+                 return
+            }
+            setLoading(true);
+
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [4, 4],
+                quality: 1,
+              });
+              if (result.canceled) {
+                console.log('ação cancelada')
+                setLoading(false)
+               return;
+              }
+              if(!result.canceled){
+                const imgManipulada = await ImageManipulator.manipulateAsync(
+                    result.assets[0].uri,
+                    [{resize:{width:900}}],
+                    {
+                        compress:1,
+                        format:ImageManipulator.SaveFormat.JPEG,
+                        base64:true
+                    }
+                );
+               
+
+                console.log(imgManipulada.uri);
+                setFoto(imgManipulada.uri)
+                foodDetect(imgManipulada.base64)
+                
+              }
+          
+              
+            
+        } catch (error) {
+            console.log(error)
+
+            
+        }
+
+    }
+    async function foodDetect(base64:string|undefined){
+        //fazendo referencias do arquivos de variavel de ambiente
+        const response = await api.post(`/v2/models/${process.env.EXPO_PUBLIC_API_MODEL_ID}/versions/${process.env.EXPO_PUBLIC_API_MODEL_VERSION_ID}/outputs`,{
+            "user_app_id":{
+                "user_id":process.env.EXPO_PUBLIC_API_USER_ID,
+                "app_id":process.env.EXPO_PUBLIC_API_APP_ID
+            },
+            "inputs":[
+                {
+                    "data":{
+                        "image": {
+                            "base64":base64
+                        }
+                    }
+                }
+            ]
+        }
+        );
+        console.log(response.data)
+
+    
     }
     return (
         <View style={styla.containe}>
 
             <View style={styla.conaineImage}>
                 {
-                    aFoto
-                        ? <Image source={Foto?{uri:Foto}:require('./../../assets/test2.jpg')} style={{ flex: 1, zIndex: 1 }} />
+                    Foto
+                        ? <Image source={{uri:Foto}} style={{height:400,width:400 }} />
                         : <Text style={styla.Text}>
                             Selecione uma foto do seu prato para analisar
                         </Text>
@@ -38,6 +101,7 @@ const Home = () => {
                 <Button
                     size={[60, 60]}
                     activeOpacity={0.7}
+                    disabled={isLoading}
                     onPress={() => { pickImage() }}
 
                 />
