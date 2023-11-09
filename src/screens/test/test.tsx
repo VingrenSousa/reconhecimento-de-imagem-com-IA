@@ -5,22 +5,8 @@ type testResProps ={
 const testResCost:testResProps =
 [
     {
-        item:'jaca',
+        item:'...',
 
-    },
-    {
-        item:'tomate',
-
-    },
-    {
-        item:'massa',
-
-    },
-    {
-        item:'corote',
-    },
-    {
-        item:'bebida',
     },
 ]
 export {testResCost}

@@ -6,6 +6,7 @@ import { testResCost } from '../test/test'
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import { api } from '../../services/api' // serviços de api, ussando biblioteca axion
+import Loading  from '../../componentes/Loading/index'
 
 
 
@@ -48,9 +49,9 @@ const Home = () => {
                 );
                
 
-                console.log(imgManipulada.uri);
-                setFoto(imgManipulada.uri)
                 foodDetect(imgManipulada.base64)
+                setFoto(imgManipulada.uri)
+               
                 
               }
           
@@ -63,8 +64,9 @@ const Home = () => {
         }
 
     }
-    async function foodDetect(base64:string|undefined){
+    async function foodDetect(Ibase64:string|undefined){
         //fazendo referencias do arquivos de variavel de ambiente
+        // console.log(Ibase64)
         try {
             
       
@@ -77,14 +79,14 @@ const Home = () => {
                 {
                     "data":{
                         "image": {
-                            "base64":base64
+                            "base64":Ibase64
                         }
                     }
                 }
             ]
         }
         );
-        console.log(response.data)
+        console.log(response.data.outputs[0].data)
         setLoading(false)
         } catch (error) {
             console.log('erro na api/axion:' +error)
@@ -126,7 +128,11 @@ const Home = () => {
 
                     />
                 </View>
-                <ScrollView style={styla.containeResCont}>
+                {isLoading
+                ?<View style={styla.containeResCont}>
+                     <Loading/>
+                </View>
+                :<ScrollView style={styla.containeResCont}>
                     {
                         testResCost
                             ? testResCost.map((n) => {
@@ -148,6 +154,7 @@ const Home = () => {
                         }} >
                     </View>
                 </ScrollView>
+                }
 
             </View>
         </View>
