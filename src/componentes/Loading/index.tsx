@@ -5,7 +5,7 @@ import { styles } from './style';
 export default function Loading() {
   return (
     <View style={styles.container}>
-      <ActivityIndicator animating={true} color="#2E9D4C" />
+      <ActivityIndicator style={{transform:[{scale:2}]}}animating={true}color="#2E9D4C" />
     </View>
   );
 }
