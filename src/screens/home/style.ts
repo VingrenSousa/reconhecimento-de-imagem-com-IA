@@ -98,8 +98,40 @@ const stylesHome=StyleSheet.create({
         borderRadius:RFValue(10),
         borderLeftWidth:10,
         borderLeftColor:Theme.CORES.button,
-        padding:RFValue(10)
+        padding:RFValue(10),
+        flexDirection:"row",
+        paddingHorizontal:RFValue(15),
+        paddingVertical:RFValue(15)
         
-    }
+    },
+    ResContPor:{
+        justifyContent:"center",
+        alignItems:"center",
+        width:RFValue(50),
+        height:RFValue(50),
+        backgroundColor:Theme.CORES.porcetagem,
+        borderRadius:5,
+
+        shadowOffset: {
+	        width: 0,
+	        height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+
+
+
+
+    },
+    TextPor:{
+        alignSelf:"center",
+        color:Theme.CORES.button,
+        fontSize:RFValue(15),
+        fontFamily:Theme.FONTES.fontePrincipal,
+        textAlign:"center",
+        width:250,
+       
+       
+    },
 })
 export default stylesHome

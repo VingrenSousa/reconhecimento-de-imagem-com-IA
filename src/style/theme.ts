@@ -9,6 +9,7 @@
      {
         button:'#2E9D4C',
         TextColor:'#D9D9D9',
-        background: "#FFF"
+        background: "#FFF",
+        porcetagem:"#648feba6"
     }
 }

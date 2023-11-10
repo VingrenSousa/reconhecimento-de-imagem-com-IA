@@ -13,9 +13,14 @@ import Loading  from '../../componentes/Loading/index'
 
 
 const Home = () => {
+    interface propsItem{
+        name:string,
+        porcentage:string
+    }
 
     const [Foto, setFoto] = useState('')
     const [isLoading, setLoading] = useState(false)
+    const [hendlsItem, setHendlsItem] = useState<propsItem[]|null>([])
 
     const pickImage = async () => {
         try {
@@ -86,7 +91,18 @@ const Home = () => {
             ]
         }
         );
-        console.log(response.data.outputs[0].data)
+        const concepts = await response.data.outputs[0].data.concepts.map((n:any)=>{
+            return{
+                name:n.name,
+                porcentage:(Math.round(n.value *100))+ "%"
+            }
+        })
+        console.log(concepts)
+
+
+        setHendlsItem(concepts)
+
+
         setLoading(false)
         } catch (error) {
             console.log('erro na api/axion:' +error)
@@ -95,6 +111,7 @@ const Home = () => {
 
     
     }
+
     return (
         <View style={styla.containe}>
 
@@ -121,8 +138,8 @@ const Home = () => {
                 <View style={styla.containeResButton}>
                     <Button
                         icone='eye'
-                        title='aqui vai uma dica'
-                        onPress={() => { console.log('ola') }}
+                        title='limpar '
+                        onPress={() => { console.log(setHendlsItem(null)) }}
                         activeOpacity={0.7}
                         size={[330, 65]}
 
@@ -134,18 +151,30 @@ const Home = () => {
                 </View>
                 :<ScrollView style={styla.containeResCont}>
                     {
-                        testResCost
-                            ? testResCost.map((n) => {
+                        hendlsItem
+                            ? hendlsItem.map((n) => {
 
                                 return (
                                     <View style={styla.ResCont}>
-
-                                        <Text>{n.item}</Text>
+                                        <View style={styla.ResContPor}>
+                                            <Text  style={[styla.TextPor,{color:"#ececec"}]}>{n.porcentage}</Text>
+                                        </View>
+                                        <Text style={styla.TextPor}>{n.name}</Text>
                                     </View>
                                 )
 
                             })
-                            : []
+                            : testResCost.map((n)=>{
+                                return (
+                                    <View style={styla.ResCont}>
+                                        <View style={styla.ResContPor}>
+                                            <Text style={[styla.TextPor,{color:"#fff"}]}>0%</Text>
+                                        </View>
+                                        <Text style={styla.TextPor}>{n.item}</Text>
+                                    </View>
+                                )
+
+                            })
                     }
                     <View
                         style={{
